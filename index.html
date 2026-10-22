@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087e8b">
+  <meta name="description" content="CIBA: educación parental, salud infantil y acompañamiento familiar durante los primeros mil días de vida.">
+  <title>CIBA | Crianza y salud infantil</title>
+  <style>
+    :root {
+      --azul: #087e8b;
+      --oscuro: #173b4b;
+      --fondo: #f3f9f8;
+      --blanco: #ffffff;
+      --texto: #243b46;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--blanco);
+      padding: 18px 20px;
+      border-bottom: 1px solid #dceae8;
+    }
+    .barra {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .marca { color: var(--azul); font-size: 1.65rem; font-weight: 800; }
+    .lema { font-size: .8rem; color: #526b74; }
+    main { max-width: 1000px; margin: auto; padding: 20px; }
+    .portada {
+      background: linear-gradient(135deg, #dff4ef, #e4f1fa);
+      border-radius: 22px;
+      padding: 34px 24px;
+      margin: 12px 0 28px;
+    }
+    .etiqueta {
+      color: var(--azul);
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    h1 { color: var(--oscuro); font-size: clamp(2rem, 7vw, 3.2rem); line-height: 1.12; }
+    h2 { color: var(--oscuro); font-size: 1.5rem; }
+    .portada p { max-width: 600px; }
+    .boton {
+      display: inline-block;
+      background: var(--azul);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+    .rejilla {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 15px;
+    }
+    .tarjeta {
+      background: var(--blanco);
+      padding: 20px;
+      border: 1px solid #dceae8;
+      border-radius: 16px;
+    }
+    .simbolo { font-size: 1.8rem; }
+    .tarjeta h3 { margin: 8px 0; color: var(--oscuro); }
+    .tarjeta p { font-size: .95rem; }
+    .nota {
+      background: #fff7e5;
+      border-left: 4px solid #c58b22;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 28px 0;
+    }
+    footer {
+      text-align: center;
+      background: var(--oscuro);
+      color: white;
+      padding: 25px 18px;
+      font-size: .9rem;
+    }
+    footer p { margin: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <div class="marca">CIBA</div>
+        <div class="lema">Crianza · Informática · Bienestar · Acompañamiento</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="portada">
+      <div class="etiqueta">Educación parental basada en evidencia</div>
+      <h1>Los primeros mil días importan toda la vida.</h1>
+      <p>
+        Información clara y práctica para acompañar a las familias
+        desde el embarazo hasta los dos años de vida.
+        Porque cuidar también es aprender.
+      </p>
+      <a class="boton" href="#biblioteca">Explorar la biblioteca</a>
+    </section>
+
+    <section id="biblioteca">
+      <h2>¿Qué necesitas aprender hoy?</h2>
+      <p>Selecciona un área para comenzar tu recorrido.</p>
+
+      <div class="rejilla">
+        <article class="tarjeta">
+          <div class="simbolo">🤰</div>
+          <h3>Durante el embarazo</h3>
+          <p>Preparación para el nacimiento, salud materna y primeros cuidados.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="simbolo">🍼</div>
+          <h3>De 0 a 6 meses</h3>
+          <p>Lactancia, sueño seguro, vacunas y cuidado del recién nacido.</p>
+        </article> 
+        <article class="tarjeta">
+          <div class="simbolo">🧸</div>
+          <h3>De 6 a 12 meses</h3>
+          <p>Alimentación complementaria, desarrollo y prevención de accidentes.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="simbolo">👣</div>
+          <h3>De 12 a 24 meses</h3>
+          <p>Nutrición, lenguaje, movimiento, vínculos y autonomía.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="simbolo">🩺</div>
+          <h3>Salud infantil</h3>
+          <p>Fiebre, diarrea, dificultad respiratoria y otros problemas frecuentes.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="simbolo">🛡️</div>
+          <h3>Prevención y seguridad</h3>
+          <p>Señales de alarma, primeros auxilios y prevención de lesiones.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="nota">
+      <strong>Una información importante</strong>
+      <p>
+        Los contenidos educativos no sustituyen la evaluación médica.
+        Ante dificultad respiratoria, alteración de la conciencia,
+        convulsiones u otros signos graves, busca atención urgente.
+      </p>
+    </section>
+
+    <section>
+      <h2>Una crianza acompañada, una infancia protegida</h2>
+      <p>
+        CIBA es un espacio educativo para madres, padres, abuelos
+        y cuidadores. Nuestro compromiso es acercar conocimientos
+        fiables a las familias con un lenguaje sencillo,
+        respetuoso y útil para la vida cotidiana.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>CIBA · Educación parental digital</strong></p>
+    <p>Información para cuidar, conocimiento para acompañar.</p>
+    <p>Los contenidos clínicos se incorporarán tras su revisión científica.</p>
+  </footer>
+</body>
+</html>
