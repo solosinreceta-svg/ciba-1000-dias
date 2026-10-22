@@ -6,6 +6,19 @@
 <title>CIBA · Acompañamiento parental en los primeros 1 000 días</title>
 <meta name="description" content="Información de salud infantil clara y fiable para madres, padres y cuidadores, desde la concepción hasta los dos años.">
 <meta name="theme-color" content="#0E4A57">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_LA">
+<meta property="og:title" content="CIBA · Acompañamiento parental en los primeros 1 000 días">
+<meta property="og:description" content="Información de salud infantil clara y fiable para madres, padres y cuidadores.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%230E4A57'/%3E%3Cpath d='M20 30c-6-4-9-7.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 3.5-3 7-9 11z' fill='none' stroke='%237FD0CF' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>
+/* Se ejecuta antes de dibujar la página: modo ahorro y tamaño de letra recordado */
+(function(){
+  var h=document.documentElement,c=navigator.connection;
+  if(c&&(c.saveData||/(^|-)2g$/.test(c.effectiveType||""))){h.classList.add("lite");}
+  try{var t=parseInt(localStorage.getItem("ciba-letra"),10);if(t>=100&&t<=125){h.style.fontSize=t+"%";}}catch(e){}
+})();
+</script>
 <style>
 :root{
   --petrol:#0E4A57;
@@ -14,17 +27,23 @@
   --turq:#7FD0CF;
   --cream:#FAF3E6;
   --cream-2:#F1E7D2;
+  --paper:#FFFDF8;
   --coral:#C4492F;
   --coral-dark:#A33A23;
+  --wa:#137C43;
+  --wa-dark:#0E6334;
   --ink:#1D2B2F;
   --muted:#52646A;
   --white:#fff;
+  --h:68px;
   --serif:Georgia,"Times New Roman",serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
+html{scroll-padding-top:calc(var(--h) + 8px)}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.6;font-size:1.0625rem;-webkit-text-size-adjust:100%}
+body.menu-abierto{overflow:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:2px}
@@ -32,38 +51,71 @@ a{color:inherit}
 .skip:focus{left:8px}
 .wrap{width:min(1120px,92%);margin-inline:auto}
 
-/* Cabecera */
+/* Cabecera con menú hamburguesa */
 header.top{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:1px solid var(--cream-2)}
-.bar{display:flex;align-items:center;justify-content:space-between;min-height:68px}
+.bar{display:flex;align-items:center;justify-content:space-between;height:var(--h)}
 .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--petrol)}
 .brand svg{width:34px;height:34px;flex:none}
 .brand b{font-family:var(--serif);font-size:1.6rem;letter-spacing:.04em;line-height:1}
 .brand small{display:none;color:var(--muted);font-size:.8rem;line-height:1.2;max-width:12rem}
-nav.main ul{list-style:none;display:flex;gap:1.6rem}
-nav.main a{text-decoration:none;font-weight:600;color:var(--petrol);padding:.5rem 0;border-bottom:2px solid transparent}
-nav.main a:hover{border-color:var(--coral)}
-.burger{display:none;background:none;border:2px solid var(--petrol);color:var(--petrol);width:48px;height:44px;border-radius:6px;cursor:pointer}
-.burger span,.burger span::before,.burger span::after{display:block;width:22px;height:2px;background:currentColor;margin:auto;position:relative;transition:transform .25s,background .25s}
-.burger span::before,.burger span::after{content:"";position:absolute;left:0}
-.burger span::before{top:-7px}.burger span::after{top:7px}
-.burger[aria-expanded="true"] span{background:transparent}
-.burger[aria-expanded="true"] span::before{transform:translateY(7px) rotate(45deg)}
-.burger[aria-expanded="true"] span::after{transform:translateY(-7px) rotate(-45deg)}
-@media(min-width:900px){.brand small{display:block}}
-@media(max-width:760px){
-  .burger{display:block}
-  nav.main{position:absolute;left:0;right:0;top:100%;background:var(--cream);border-bottom:1px solid var(--cream-2);max-height:0;overflow:hidden;transition:max-height .3s ease}
-  nav.main.open{max-height:360px}
-  nav.main ul{flex-direction:column;gap:0;padding:.5rem 4% 1rem}
-  nav.main a{display:block;padding:.9rem 0;border-bottom:1px solid var(--cream-2);font-size:1.1rem}
-}
+@media(min-width:700px){.brand small{display:block}}
+.menu-btn{display:inline-flex;align-items:center;gap:.6rem;min-height:48px;padding:.4rem 1rem;background:var(--petrol);color:var(--white);border:0;border-radius:4px;font:inherit;font-weight:700;cursor:pointer}
+.menu-btn .ic{position:relative;display:block;width:22px;height:2px;background:currentColor;transition:background .2s}
+.menu-btn .ic::before,.menu-btn .ic::after{content:"";position:absolute;left:0;width:22px;height:2px;background:currentColor;transition:transform .25s}
+.menu-btn .ic::before{top:-7px}.menu-btn .ic::after{top:7px}
+.menu-btn[aria-expanded="true"] .ic{background:transparent}
+.menu-btn[aria-expanded="true"] .ic::before{transform:translateY(7px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] .ic::after{transform:translateY(-7px) rotate(-45deg)}
+
+.fondo{position:fixed;z-index:55;top:var(--h);left:0;right:0;bottom:0;background:rgba(10,54,64,.5);opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.fondo.open{opacity:1;visibility:visible;transition:opacity .3s}
+.panel{position:fixed;z-index:60;top:var(--h);right:0;bottom:0;width:min(380px,100%);background:var(--cream);border-left:1px solid var(--cream-2);overflow-y:auto;overscroll-behavior:contain;padding:.6rem 1.1rem 2rem;transform:translateX(100%);visibility:hidden;transition:transform .3s ease,visibility 0s .3s}
+.panel.open{transform:none;visibility:visible;transition:transform .3s ease}
+.panel ul{list-style:none}
+.panel li a{display:block;min-height:48px;padding:.75rem .6rem;border-bottom:1px solid var(--cream-2);border-left:4px solid transparent;text-decoration:none;font-weight:600;color:var(--petrol);font-size:1.08rem}
+.panel li a:hover{background:var(--cream-2)}
+.panel li a[aria-current="true"]{border-left-color:var(--coral);background:var(--cream-2)}
+.panel .grupo{margin:1.1rem 0 .1rem .6rem;font-size:.92rem;font-weight:700;color:var(--muted)}
+.panel li.sub a{padding-left:1.4rem;font-weight:500}
+.herr{display:grid;gap:.8rem;margin-top:1.4rem}
+.letra-ctl{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.2rem .6rem}
+.letra-ctl span{font-weight:600;color:var(--petrol)}
+.letra-ctl div{display:flex;gap:.5rem}
+.mini{min-width:52px;min-height:48px;border:2px solid var(--petrol);background:transparent;color:var(--petrol);border-radius:4px;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer}
+.mini:hover{background:var(--petrol);color:var(--white)}
+@media(prefers-reduced-motion:reduce){.panel,.fondo,.menu-btn .ic,.menu-btn .ic::before,.menu-btn .ic::after{transition:none!important}}
+.lite .panel,.lite .fondo{transition:none!important}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:.7rem 1.4rem;border-radius:4px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:1rem;font-family:inherit}
+.btn.main{background:var(--coral);color:var(--white)}
+.btn.main:hover{background:var(--coral-dark)}
+.btn.line{border-color:var(--petrol);color:var(--petrol);background:transparent}
+.btn.line:hover{background:var(--petrol);color:var(--white)}
+.btn.wa{background:var(--wa);color:var(--white)}
+.btn.wa:hover{background:var(--wa-dark)}
+.btn.small{min-height:46px;padding:.5rem 1.1rem;font-size:.97rem}
+
+/* Botones flotantes */
+.flota{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:45;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
+body.menu-abierto .flota{display:none}
+.f-wa{display:inline-flex;align-items:center;gap:.5rem;min-height:52px;padding:.5rem 1.05rem;border-radius:28px;background:var(--wa);color:var(--white);text-decoration:none;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.f-wa:hover{background:var(--wa-dark)}
+.f-wa svg{width:24px;height:24px;flex:none}
+.f-top{display:none;width:48px;height:48px;border-radius:50%;background:var(--petrol);color:var(--white);border:0;cursor:pointer;place-items:center}
+.f-top.show{display:grid}
+.f-top svg{width:22px;height:22px}
+
+/* Aviso de conexión */
+.red{position:fixed;left:0;right:0;top:var(--h);z-index:48;display:none;padding:.55rem 1rem;text-align:center;font-size:.95rem;color:var(--white);background:#7A2E1E}
+.red.show{display:block}
+.red.vuelve{background:#0B5B3A}
 
 /* Espacios para fotografía */
 .ph{position:relative;background:var(--cream-2);overflow:hidden}
-.ph img{width:100%;height:100%;object-fit:cover}
+.ph img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover}
 .ph::after{content:attr(data-falta);position:absolute;inset:auto 0 0 0;padding:.5rem .8rem;font-size:.78rem;color:var(--petrol);background:rgba(250,243,230,.9);z-index:0}
-.ph img{position:relative;z-index:1}
-.ph:has(img)::after{display:none}
+.ph:has(img)::after,.ph.ok::after{display:none}
 
 /* Portada */
 .hero{padding:clamp(1.5rem,4vw,3.5rem) 0 clamp(2.5rem,6vw,5rem)}
@@ -73,20 +125,15 @@ nav.main a:hover{border-color:var(--coral)}
 h1{font-family:var(--serif);font-weight:700;color:var(--petrol);font-size:clamp(2.1rem,6.2vw,3.7rem);line-height:1.08;letter-spacing:-.01em}
 .lead{margin-top:1.1rem;font-size:1.15rem;color:var(--muted);max-width:30rem}
 .cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
-.btn{display:inline-flex;align-items:center;min-height:48px;padding:.7rem 1.4rem;border-radius:4px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:1rem;font-family:inherit}
-.btn.main{background:var(--coral);color:var(--white)}
-.btn.main:hover{background:var(--coral-dark)}
-.btn.line{border-color:var(--petrol);color:var(--petrol);background:transparent}
-.btn.line:hover{background:var(--petrol);color:var(--white)}
 .hero-photo{aspect-ratio:4/5;border-radius:120px 6px 6px 6px;max-height:560px;width:100%}
 @media(max-width:859px){.hero-photo{aspect-ratio:4/3;border-radius:80px 6px 6px 6px}}
-.hero-note{margin-top:.7rem;font-size:.85rem;color:var(--muted)}
-
-/* Animación de entrada de la portada (una sola vez) */
+.hero-note{margin-top:1.2rem;font-size:.9rem;color:var(--muted)}
 @media(prefers-reduced-motion:no-preference){
-  .hero .kicker,.hero h1,.hero .lead,.hero .cta{opacity:0;transform:translateY(14px);animation:in .7s ease forwards}
-  .hero h1{animation-delay:.12s}.hero .lead{animation-delay:.24s}.hero .cta{animation-delay:.36s}
-  .hero-photo{clip-path:inset(0 0 100% 0);animation:reveal 1s .15s cubic-bezier(.2,.7,.2,1) forwards}
+  html:not(.lite) .hero .kicker,html:not(.lite) .hero h1,html:not(.lite) .hero .lead,html:not(.lite) .hero .cta{opacity:0;transform:translateY(14px);animation:in .7s ease forwards}
+  html:not(.lite) .hero h1{animation-delay:.12s}
+  html:not(.lite) .hero .lead{animation-delay:.24s}
+  html:not(.lite) .hero .cta{animation-delay:.36s}
+  html:not(.lite) .hero-photo{clip-path:inset(0 0 100% 0);animation:reveal 1s .15s cubic-bezier(.2,.7,.2,1) forwards}
   @keyframes in{to{opacity:1;transform:none}}
   @keyframes reveal{to{clip-path:inset(0 0 0 0)}}
 }
@@ -97,7 +144,7 @@ h2{font-family:var(--serif);color:var(--petrol);font-size:clamp(1.7rem,4.2vw,2.5
 .sec-intro{color:var(--muted);margin-top:.6rem;max-width:34rem}
 
 /* Cuatro pilares */
-.pilares{background:#FFFDF8}
+.pilares{background:var(--paper)}
 .pilar{--c:var(--petrol);display:grid;gap:1.4rem;margin-top:2rem;padding:1.5rem 1.3rem;background:var(--cream);border-left:8px solid var(--c);border-radius:4px}
 .p-crianza{--c:#B23E26}.p-informatica{--c:#137A80}.p-bienestar{--c:#0E4A57}.p-acompanamiento{--c:#8A5F10}
 @media(min-width:860px){
@@ -114,7 +161,44 @@ h2{font-family:var(--serif);color:var(--petrol);font-size:clamp(1.7rem,4.2vw,2.5
 .pilar h4{font-family:var(--serif);font-size:1.15rem;color:var(--petrol);line-height:1.3}
 .pilar li p{color:var(--muted);font-size:.97rem;margin-top:.15rem}
 .etq{display:inline-block;margin-top:.45rem;font-size:.82rem;font-weight:600;color:var(--c);border:1px solid currentColor;padding:.1rem .6rem;border-radius:20px;text-decoration:none}
+a.etq{padding:.45rem .9rem;min-height:40px}
 a.etq:hover{background:var(--c);border-color:var(--c);color:var(--white)}
+
+/* Dudas de Nayara y de Turey */
+.dudas{--c:#8A5F10}
+.dudas-nayara{background:var(--cream)}
+.dudas-turey{background:var(--paper)}
+.dudas-head{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center}
+.avatar{width:112px;height:112px;border-radius:50%;border:4px solid var(--c)}
+@media(min-width:760px){.avatar{width:160px;height:160px;border-width:5px}}
+.avatar.ph::after{content:attr(data-ini);inset:0;display:flex;align-items:center;justify-content:center;padding:0;background:none;font-family:var(--serif);font-size:3.2rem;font-weight:700;color:var(--c)}
+.avatar.ph:has(img)::after,.avatar.ph.ok::after{display:none}
+.lbl{display:block;margin-top:1.8rem;font-weight:700;color:var(--petrol)}
+.busca{position:relative;margin-top:.5rem;max-width:640px}
+.busca input{width:100%;min-height:54px;padding:.6rem 3.4rem .6rem 1rem;font:inherit;border:2px solid var(--petrol);border-radius:4px;background:var(--white);color:var(--ink)}
+.busca input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.borrar{position:absolute;right:0;top:0;width:54px;height:54px;border:0;background:none;color:var(--petrol);font-size:1.7rem;line-height:1;cursor:pointer;display:none}
+.busca.tiene .borrar{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+.chip{min-height:46px;padding:.35rem 1rem;border:1.5px solid var(--c);color:var(--c);background:transparent;border-radius:24px;font:inherit;font-weight:600;cursor:pointer}
+.chip:hover{background:var(--c);color:var(--white)}
+.contador{margin-top:1.1rem;min-height:1.6em;color:var(--muted);font-size:.95rem}
+.res{list-style:none;margin-top:.3rem}
+.res li{display:grid;gap:.7rem;padding:1.1rem 0;border-top:1px solid rgba(14,74,87,.18)}
+@media(min-width:760px){.res li{grid-template-columns:1fr auto;align-items:center;gap:1.5rem}}
+.res .q{font-family:var(--serif);font-size:1.18rem;line-height:1.3;color:var(--petrol)}
+.res mark{background:#F8E3B5;color:inherit;padding:0 .1em}
+.res .meta{margin-top:.3rem;font-size:.9rem;color:var(--muted)}
+.est{display:inline-block;margin-top:.4rem;font-size:.8rem;font-weight:700;padding:.1rem .6rem;border-radius:3px}
+.est-ok{color:#0B5B3A;background:#CBEBD9}
+.est-wa{color:#7A4B00;background:#F8E3B5}
+.mas{margin-top:1rem}
+.otra{margin-top:1.4rem;padding:1.1rem 1.2rem;background:var(--white);border-left:6px solid var(--wa);display:flex;flex-wrap:wrap;gap:.9rem 1.4rem;align-items:center;justify-content:space-between;max-width:760px}
+.otra p{font-weight:600;color:var(--petrol)}
+.nota{margin-top:1.4rem;display:grid;gap:.8rem;max-width:760px}
+.nota p{border-left:4px solid var(--c);padding:.1rem 0 .1rem 1rem;color:var(--muted);font-size:.96rem}
+.nota .urg{border-color:var(--coral-dark);color:var(--ink)}
+.sinjs{margin-top:1.2rem;color:var(--ink)}
 
 /* Destacados */
 .dest-grid{display:grid;gap:1.6rem;margin-top:2rem}
@@ -132,7 +216,6 @@ a.etq:hover{background:var(--c);border-color:var(--c);color:var(--white)}
 .dest-item h3{font-family:var(--serif);font-size:1.15rem;color:var(--petrol);line-height:1.25}
 .dest-item p{font-size:.95rem;color:var(--muted);margin-top:.25rem}
 .estado{display:inline-block;margin-top:.45rem;font-size:.8rem;font-weight:700;color:#7A4B00;background:#F8E3B5;padding:.1rem .6rem;border-radius:3px}
-.ok{color:#0B5B3A;background:#CBEBD9}
 
 /* Biblioteca */
 .bib{background:var(--cream-2)}
@@ -149,11 +232,14 @@ a.etq:hover{background:var(--c);border-color:var(--c);color:var(--white)}
 .aviso{margin-top:1.4rem;border-left:4px solid var(--coral);padding:.2rem 0 .2rem 1rem;color:var(--muted);font-size:.98rem;max-width:34rem}
 
 /* Pie */
-footer{background:var(--petrol-dark);color:#CFE3E5;padding:2rem 0;font-size:.92rem}
-footer .wrap{display:grid;gap:.8rem}
+footer{background:var(--petrol-dark);color:#CFE3E5;padding:2.2rem 0 5.5rem;font-size:.95rem}
+footer .wrap{display:grid;gap:1rem}
 footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spacing:.04em}
+footer ul{list-style:none;display:flex;flex-wrap:wrap;gap:.2rem 1.2rem}
+footer li a{display:inline-block;padding:.7rem 0;color:var(--white);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35)}
+footer li a:hover{border-bottom-color:var(--turq)}
 
-/* Aparición suave al desplazarse (una vez, solo si el usuario lo permite) */
+/* Aparición suave (una vez; solo si el usuario lo permite y no hay modo ahorro) */
 @media(prefers-reduced-motion:no-preference){
   .js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
   .js .rv.vis{opacity:1;transform:none}
@@ -166,22 +252,39 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
 <header class="top">
   <div class="wrap bar">
     <a class="brand" href="#inicio" aria-label="CIBA, ir al inicio">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0E4A57"/><path d="M20 30c-6-4-9-7.500-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 3.500-3 7-9 11z" fill="none" stroke="#7FD0CF" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="19" r="2.200" fill="#E9876F"/></svg>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0E4A57"/><path d="M20 30c-6-4-9-7.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 3.5-3 7-9 11z" fill="none" stroke="#7FD0CF" stroke-width="2" stroke-linejoin="round"/><circle cx="20" cy="19" r="2.2" fill="#E9876F"/></svg>
       <b>CIBA</b>
       <small>Crianza, Informática, Bienestar y Acompañamiento</small>
     </a>
-    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"><span></span></button>
-    <nav class="main" id="menu" aria-label="Principal">
-      <ul>
-        <li><a href="#crianza">Crianza</a></li>
-        <li><a href="#informatica">Informática</a></li>
-        <li><a href="#bienestar">Bienestar</a></li>
-        <li><a href="#acompanamiento">Acompañamiento</a></li>
-        <li><a href="#biblioteca">Biblioteca</a></li>
-      </ul>
-    </nav>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span class="ic" aria-hidden="true"></span><span id="menu-txt">Menú</span></button>
   </div>
 </header>
+
+<div class="fondo" id="fondo"></div>
+<nav class="panel" id="menu" aria-label="Menú principal">
+  <ul>
+    <li><a href="#inicio">Inicio</a></li>
+    <li class="grupo" aria-hidden="true">Los cuatro pilares</li>
+    <li class="sub"><a href="#crianza">Crianza</a></li>
+    <li class="sub"><a href="#informatica">Informática</a></li>
+    <li class="sub"><a href="#bienestar">Bienestar</a></li>
+    <li class="sub"><a href="#acompanamiento">Acompañamiento</a></li>
+    <li class="grupo" aria-hidden="true">Busca tu duda</li>
+    <li class="sub"><a href="#dudas-nayara">Las dudas de Nayara</a></li>
+    <li class="sub"><a href="#dudas-turey">Turey también tiene dudas</a></li>
+    <li class="grupo" aria-hidden="true">Más</li>
+    <li class="sub"><a href="#destacados">Recursos destacados</a></li>
+    <li class="sub"><a href="#biblioteca">Biblioteca</a></li>
+    <li class="sub"><a href="#proyecto">El proyecto</a></li>
+  </ul>
+  <div class="herr">
+    <div class="letra-ctl"><span id="letra-lbl">Tamaño de letra</span><div><button class="mini" id="a-menos" type="button" aria-label="Letra más pequeña">A−</button><button class="mini" id="a-mas" type="button" aria-label="Letra más grande">A+</button></div></div>
+    <a class="btn wa" data-wa="Hola, quisiera hacer una consulta sobre CIBA." href="https://wa.me/5350861330?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20CIBA." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <a class="btn line" id="compartir" href="https://wa.me/?text=CIBA%3A%20informaci%C3%B3n%20de%20salud%20infantil%20para%20las%20familias.%20https%3A%2F%2Fsolosinreceta-svg.github.io%2Fciba-1000-dias%2F" target="_blank" rel="noopener">Compartir CIBA por WhatsApp</a>
+  </div>
+</nav>
+
+<div class="red" id="red" role="status" aria-live="polite"></div>
 
 <main id="contenido">
 
@@ -195,7 +298,7 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
         <a class="btn main" href="#pilares">Ver los cuatro pilares</a>
         <a class="btn line" href="sueno-seguro.html">Guía de sueño seguro</a>
       </div>
-      <p class="hero-note" style="margin-top:1.2rem">CIBA: crianza, informática, bienestar y acompañamiento.</p>
+      <p class="hero-note">CIBA: crianza, informática, bienestar y acompañamiento.</p>
     </div>
     <div>
       <!-- FOTO PROTAGONISTA: guarda una foto real y con permiso de uso como "portada.jpg" en la misma carpeta que este archivo -->
@@ -210,6 +313,7 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
   <div class="wrap">
     <h2>Los cuatro pilares de CIBA</h2>
     <p class="sec-intro">Todo el contenido del sitio se organiza en estas cuatro partes. Cada tema reunirá artículos, vídeos, audios y guías prácticas.</p>
+
     <article class="pilar p-crianza rv" id="crianza">
       <div class="pilar-head">
         <span class="letra" aria-hidden="true">C</span>
@@ -223,6 +327,7 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
         <li><h4>Primeros pasos</h4><p>Del gateo a la marcha, con calma y seguridad.</p><span class="etq">En preparación</span></li>
       </ul>
     </article>
+
     <article class="pilar p-informatica rv" id="informatica">
       <div class="pilar-head">
         <span class="letra" aria-hidden="true">I</span>
@@ -234,6 +339,7 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
         <li><h4>Descargar y compartir los materiales</h4><p>PDF, vídeos y audios, también con pocos datos y por WhatsApp.</p><span class="etq">En preparación</span></li>
       </ul>
     </article>
+
     <article class="pilar p-bienestar rv" id="bienestar">
       <div class="pilar-head">
         <span class="letra" aria-hidden="true">B</span>
@@ -248,6 +354,7 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
         <li><h4>Bienestar familiar y hábitos saludables</h4><p>El cuidado también de quienes cuidan.</p><span class="etq">En preparación</span></li>
       </ul>
     </article>
+
     <article class="pilar p-acompanamiento rv" id="acompanamiento">
       <div class="pilar-head">
         <span class="letra" aria-hidden="true">A</span>
@@ -255,11 +362,89 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
         <p>Apoyo profesional y de la comunidad, para que ninguna familia se sienta sola.</p>
       </div>
       <ul>
+        <li><h4>Las dudas de Nayara</h4><p>Preguntas frecuentes sobre embarazo, lactancia y desarrollo.</p><a class="etq" href="#dudas-nayara">Buscar mi duda</a></li>
+        <li><h4>Turey también tiene dudas</h4><p>Preguntas frecuentes sobre salud, prevención y cuidados en casa.</p><a class="etq" href="#dudas-turey">Buscar mi duda</a></li>
         <li><h4>Conversaciones con especialistas</h4><p>Entrevistas y respuestas del equipo de salud.</p><span class="etq">En preparación</span></li>
         <li><h4>Familias con menos apoyo</h4><p>Madres adolescentes, madres solas, abuelas y otros cuidadores.</p><span class="etq">En preparación</span></li>
         <li><h4>Tu opinión</h4><p>Cuéntanos qué te sirvió y qué falta (cuando el formulario esté listo).</p><span class="etq">En preparación</span></li>
       </ul>
     </article>
+  </div>
+</section>
+
+<section class="dudas dudas-nayara" id="dudas-nayara" aria-labelledby="t-nayara">
+  <div class="wrap">
+    <div class="dudas-head">
+      <!-- AVATAR: guarda la imagen como "nayara.jpg" (cuadrada, unos 320 x 320 píxeles) -->
+      <figure class="ph avatar" data-ini="N">
+        <img src="nayara.jpg" width="320" height="320" alt="Nayara, uno de los personajes de CIBA que representan a las personas cuidadoras" loading="lazy" onload="this.parentNode.classList.add('ok')" onerror="this.remove()">
+      </figure>
+      <div>
+        <h2 id="t-nayara">Las dudas de Nayara</h2>
+        <p class="sec-intro">Busca una palabra o elige un tema. Si la duda aún no tiene artículo, te atendemos por WhatsApp.</p>
+      </div>
+    </div>
+    <label class="lbl" for="q-nayara">Escribe tu duda o una palabra clave</label>
+    <div class="busca" id="busca-nayara" role="search">
+      <input type="search" id="q-nayara" placeholder="Por ejemplo: lactancia" autocomplete="off" enterkeyhint="search">
+      <button type="button" class="borrar" id="x-nayara" aria-label="Borrar búsqueda">×</button>
+    </div>
+    <div class="chips" role="group" aria-label="Búsquedas frecuentes">
+      <button type="button" class="chip" data-q="lactancia" data-para="nayara">Lactancia</button>
+      <button type="button" class="chip" data-q="sueño" data-para="nayara">Sueño</button>
+      <button type="button" class="chip" data-q="desarrollo" data-para="nayara">Desarrollo</button>
+      <button type="button" class="chip" data-q="embarazo" data-para="nayara">Embarazo</button>
+    </div>
+    <p class="contador" id="cnt-nayara" role="status" aria-live="polite"></p>
+    <ul class="res" id="res-nayara"></ul>
+    <button type="button" class="btn line mas" id="mas-nayara" hidden>Ver más dudas</button>
+    <div class="otra">
+      <p id="otraT-nayara">¿No ves tu duda? Pregúntala por WhatsApp.</p>
+      <a class="btn wa small" id="otraB-nayara" href="https://wa.me/5350861330?text=Hola%2C%20tengo%20una%20duda%20sobre%20crianza%20y%20salud%20infantil." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+    <div class="nota">
+      <p class="urg">Si crees que se trata de una urgencia o notas que tu hijo o hija empeora, no esperes la respuesta del chat: acude de inmediato al servicio de salud más cercano.</p>
+      <p>Al escribirnos, evita enviar el nombre completo, la dirección o fotos en las que se pueda identificar a tu hijo o hija. La información es educativa y no sustituye la consulta médica.</p>
+    </div>
+    <noscript><p class="sinjs">Para buscar necesitas activar JavaScript en tu navegador. Mientras tanto, <a href="https://wa.me/5350861330">escríbenos por WhatsApp</a>.</p></noscript>
+  </div>
+</section>
+
+<section class="dudas dudas-turey" id="dudas-turey" aria-labelledby="t-turey">
+  <div class="wrap">
+    <div class="dudas-head">
+      <!-- AVATAR: guarda la imagen como "turey.jpg" (cuadrada, unos 320 x 320 píxeles) -->
+      <figure class="ph avatar" data-ini="T">
+        <img src="turey.jpg" width="320" height="320" alt="Turey, uno de los personajes de CIBA que representan a las personas cuidadoras" loading="lazy" onload="this.parentNode.classList.add('ok')" onerror="this.remove()">
+      </figure>
+      <div>
+        <h2 id="t-turey">Turey también tiene dudas</h2>
+        <p class="sec-intro">Busca una palabra o elige un tema. Si la duda aún no tiene artículo, te atendemos por WhatsApp.</p>
+      </div>
+    </div>
+    <label class="lbl" for="q-turey">Escribe tu duda o una palabra clave</label>
+    <div class="busca" id="busca-turey" role="search">
+      <input type="search" id="q-turey" placeholder="Por ejemplo: botiquín" autocomplete="off" enterkeyhint="search">
+      <button type="button" class="borrar" id="x-turey" aria-label="Borrar búsqueda">×</button>
+    </div>
+    <div class="chips" role="group" aria-label="Búsquedas frecuentes">
+      <button type="button" class="chip" data-q="botiquín" data-para="turey">Botiquín</button>
+      <button type="button" class="chip" data-q="mosquitos" data-para="turey">Mosquitos</button>
+      <button type="button" class="chip" data-q="alergias" data-para="turey">Alergias</button>
+      <button type="button" class="chip" data-q="accidentes" data-para="turey">Accidentes</button>
+    </div>
+    <p class="contador" id="cnt-turey" role="status" aria-live="polite"></p>
+    <ul class="res" id="res-turey"></ul>
+    <button type="button" class="btn line mas" id="mas-turey" hidden>Ver más dudas</button>
+    <div class="otra">
+      <p id="otraT-turey">¿No ves tu duda? Pregúntala por WhatsApp.</p>
+      <a class="btn wa small" id="otraB-turey" href="https://wa.me/5350861330?text=Hola%2C%20tengo%20una%20duda%20sobre%20crianza%20y%20salud%20infantil." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+    <div class="nota">
+      <p class="urg">Si crees que se trata de una urgencia o notas que tu hijo o hija empeora, no esperes la respuesta del chat: acude de inmediato al servicio de salud más cercano.</p>
+      <p>Al escribirnos, evita enviar el nombre completo, la dirección o fotos en las que se pueda identificar a tu hijo o hija. La información es educativa y no sustituye la consulta médica.</p>
+    </div>
+    <noscript><p class="sinjs">Para buscar necesitas activar JavaScript en tu navegador. Mientras tanto, <a href="https://wa.me/5350861330">escríbenos por WhatsApp</a>.</p></noscript>
   </div>
 </section>
 
@@ -324,38 +509,236 @@ footer b{font-family:var(--serif);color:var(--white);font-size:1.2rem;letter-spa
   </div>
 </section>
 
-<!-- CONTACTO: cuando tengas el Google Form de opiniones, añade aquí una sección con el botón que enlace a su dirección real. -->
-
 </main>
 
 <footer>
   <div class="wrap">
     <b>CIBA</b>
     <p>Ecosistema digital de acompañamiento parental en los primeros 1 000 días de vida.</p>
+    <ul aria-label="Accesos rápidos">
+      <li><a href="#pilares">Los cuatro pilares</a></li>
+      <li><a href="#dudas-nayara">Dudas de Nayara</a></li>
+      <li><a href="#dudas-turey">Dudas de Turey</a></li>
+      <li><a href="sueno-seguro.html">Sueño seguro</a></li>
+      <li><a href="https://wa.me/5350861330" target="_blank" rel="noopener">WhatsApp</a></li>
+    </ul>
     <p>Las imágenes y los materiales se publican solo con procedencia y permisos verificados.</p>
   </div>
 </footer>
 
+<div class="flota">
+  <button type="button" class="f-top" id="f-top" aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <a class="f-wa" data-wa="Hola, quisiera hacer una consulta sobre CIBA." href="https://wa.me/5350861330?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20sobre%20CIBA." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.800 7L4 20.500 5.500 15.800A8 8 0 1 1 21 12z"/></svg>
+    <span>Chat</span>
+  </a>
+</div>
+
 <script>
 (function(){
-  var b=document.getElementById('burger'),m=document.getElementById('menu');
-  function cerrar(){m.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menú')}
-  b.addEventListener('click',function(){
-    var abierto=m.classList.toggle('open');
-    b.setAttribute('aria-expanded',abierto);
-    b.setAttribute('aria-label',abierto?'Cerrar menú':'Abrir menú');
-  });
-  m.addEventListener('click',function(e){if(e.target.tagName==='A')cerrar()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')cerrar()});
+"use strict";
 
-  var els=document.querySelectorAll('.rv');
-  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    document.documentElement.classList.add('js');
-    var io=new IntersectionObserver(function(es){
-      es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target)}});
-    },{threshold:.12});
-    els.forEach(function(el){io.observe(el)});
+/* ============================================================
+   DUDAS FRECUENTES  (aquí se añaden o se cambian las preguntas)
+   quien: "nayara" o "turey"
+   q: la pregunta tal como la verá la familia
+   k: palabras clave extra para el buscador (sin tildes, separadas por espacios)
+   pilar y tema: dónde se clasifica
+   url: dirección del artículo cuando exista; null si todavía no existe
+   ============================================================ */
+/*DUDAS-INICIO*/
+var DUDAS=[
+ {quien:"nayara",q:"¿Cómo debo acostar a mi bebé para que duerma con seguridad?",k:"dormir sueno cuna acostar posicion",pilar:"Bienestar",tema:"Prevención de lesiones y primeros auxilios",url:"sueno-seguro.html"},
+ {quien:"nayara",q:"¿Dónde puedo encontrar apoyo si me cuesta amamantar?",k:"lactancia amamantar pecho leche apoyo",pilar:"Crianza",tema:"Apego y lactancia",url:null},
+ {quien:"nayara",q:"¿A qué edad suelen aparecer la sonrisa, el balbuceo y el control de la cabeza?",k:"desarrollo sonrisa balbuceo cabeza edad hitos",pilar:"Bienestar",tema:"Neurodesarrollo y señales de alerta",url:null},
+ {quien:"nayara",q:"¿Cómo sé cuándo conviene consultar por el desarrollo de mi bebé?",k:"desarrollo alerta preocupar consultar senales",pilar:"Bienestar",tema:"Neurodesarrollo y señales de alerta",url:null},
+ {quien:"nayara",q:"¿Cómo puedo acompañar a mi bebé desde el embarazo?",k:"embarazo prenatal estimulacion hablar musica",pilar:"Crianza",tema:"Estimulación prenatal",url:null},
+ {quien:"nayara",q:"Es mi primer hijo o hija: ¿cómo fortalezco el vínculo?",k:"vinculo apego primerizo primeriza afecto",pilar:"Crianza",tema:"Apego y lactancia",url:null},
+ {quien:"nayara",q:"¿Cómo puedo estimular el lenguaje y el juego de mi bebé?",k:"lenguaje juego hablar estimular palabras",pilar:"Crianza",tema:"Competencias parentales",url:null},
+ {quien:"turey",q:"¿Qué conviene tener en un botiquín pediátrico casero?",k:"botiquin primeros auxilios casa",pilar:"Bienestar",tema:"Prevención de lesiones y primeros auxilios",url:null},
+ {quien:"turey",q:"¿Cómo evitar que los mosquitos se críen en mi casa?",k:"mosquitos chikungunya dengue repelente casa agua",pilar:"Bienestar",tema:"Enfermedades transmisibles y prevención",url:null},
+ {quien:"turey",q:"¿Cómo reconozco los síntomas del chikungunya y cuándo consultar?",k:"chikungunya sintomas fiebre consultar",pilar:"Bienestar",tema:"Enfermedades transmisibles y prevención",url:null},
+ {quien:"turey",q:"¿Cómo reducir el polvo y otros alérgenos en casa?",k:"alergenos polvo alergia casa limpieza",pilar:"Bienestar",tema:"Salud respiratoria y alergias",url:null},
+ {quien:"turey",q:"¿Cómo sé si mi hijo o hija tiene asma o alergias?",k:"asma alergia respirar tos",pilar:"Bienestar",tema:"Salud respiratoria y alergias",url:null},
+ {quien:"turey",q:"¿Cómo se usa un inhalador con cámara espaciadora?",k:"inhalador camara espaciadora asma",pilar:"Bienestar",tema:"Salud respiratoria y alergias",url:null},
+ {quien:"turey",q:"¿Cómo hago más seguro el hogar cuando mi bebé empieza a moverse?",k:"accidentes caidas hogar seguridad gatear caminar",pilar:"Bienestar",tema:"Prevención de lesiones y primeros auxilios",url:null},
+ {quien:"turey",q:"¿Qué hago si mi hijo o hija se golpea o se quema?",k:"accidentes quemadura golpe herida primeros auxilios",pilar:"Bienestar",tema:"Prevención de lesiones y primeros auxilios",url:null}
+];
+/*DUDAS-FIN*/
+
+var WA="5350861330";
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var lite=document.documentElement.classList.contains("lite");
+function $(id){return document.getElementById(id);}
+function waUrl(t){return "https://wa.me/"+WA+"?text="+encodeURIComponent(t);}
+
+/*FN-INICIO*/
+/* Texto sin tildes ni mayúsculas, carácter a carácter (conserva la longitud) */
+function nc(s){
+  var o="",i,c,n;
+  for(i=0;i<s.length;i++){
+    c=s.charAt(i).toLowerCase();
+    n=c.normalize?c.normalize("NFD").replace(/[\u0300-\u036f]/g,""):c;
+    o+=(n.length===1)?n:c;
   }
+  return o;
+}
+function stem(t){return (t.length>3&&t.charAt(t.length-1)==="s")?t.slice(0,-1):t;}
+function toks(q){return nc(q).split(/[^a-z0-9]+/).filter(Boolean).map(stem);}
+/*FN-FIN*/
+
+/* Escribe el texto marcando las palabras encontradas (sin usar innerHTML) */
+function pintar(el,text,tk){
+  var n=nc(text),m=[],i,j,p,run,ini;
+  for(i=0;i<text.length;i++){m[i]=false;}
+  tk.forEach(function(t){
+    if(!t){return;}
+    p=n.indexOf(t);
+    while(p>-1){for(j=p;j<p+t.length;j++){m[j]=true;}p=n.indexOf(t,p+t.length);}
+  });
+  i=0;
+  while(i<text.length){
+    ini=i;run=m[i];
+    while(i<text.length&&m[i]===run){i++;}
+    if(run){var mk=document.createElement("mark");mk.textContent=text.slice(ini,i);el.appendChild(mk);}
+    else{el.appendChild(document.createTextNode(text.slice(ini,i)));}
+  }
+}
+
+/* Buscador de cada sección */
+function seccion(quien){
+  var inp=$("q-"+quien),box=$("busca-"+quien),clr=$("x-"+quien),ul=$("res-"+quien),
+      cnt=$("cnt-"+quien),mas=$("mas-"+quien),otraT=$("otraT-"+quien),otraB=$("otraB-"+quien);
+  if(!inp||!ul){return;}
+  var items=DUDAS.filter(function(d){return d.quien===quien;}),LOTE=5,shown=LOTE,cur=[],q="";
+  items.forEach(function(d){d._h=nc(d.q+" "+d.k+" "+d.tema+" "+d.pilar);});
+
+  function dibujar(){
+    var tk=toks(q),qq=q.trim();
+    cur=items.filter(function(d){return tk.every(function(t){return d._h.indexOf(t)>-1;});});
+    ul.textContent="";
+    cur.slice(0,shown).forEach(function(d){
+      var li=document.createElement("li"),a=document.createElement("div"),
+          p=document.createElement("p"),meta=document.createElement("p"),
+          b=document.createElement("span"),act=document.createElement("div"),
+          l=document.createElement("a");
+      p.className="q";pintar(p,d.q,tk);
+      meta.className="meta";meta.textContent=d.pilar+": "+d.tema;
+      b.className="est "+(d.url?"est-ok":"est-wa");
+      b.textContent=d.url?"Artículo disponible":"Aún sin artículo: te atendemos por WhatsApp";
+      a.appendChild(p);a.appendChild(meta);a.appendChild(b);
+      l.className="btn small "+(d.url?"line":"wa");
+      if(d.url){l.href=d.url;}
+      else{l.href=waUrl("Hola, tengo esta duda: "+d.q);l.target="_blank";l.rel="noopener";}
+      l.textContent=d.url?"Leer el artículo":"Preguntar por WhatsApp";
+      l.setAttribute("aria-label",(d.url?"Leer el artículo: ":"Preguntar por WhatsApp: ")+d.q);
+      act.appendChild(l);li.appendChild(a);li.appendChild(act);ul.appendChild(li);
+    });
+    if(!qq){cnt.textContent=items.length+(items.length===1?" duda frecuente":" dudas frecuentes");}
+    else if(!cur.length){cnt.textContent="No encontramos resultados para «"+qq+"».";}
+    else{cnt.textContent=cur.length+(cur.length===1?" resultado":" resultados")+" para «"+qq+"»";}
+    if(qq&&!cur.length){
+      otraT.textContent="Todavía no tenemos esa duda. Escríbela por WhatsApp y te atenderemos.";
+      otraB.href=waUrl("Hola, tengo esta duda: "+qq);
+    }else{
+      otraT.textContent="¿No ves tu duda? Pregúntala por WhatsApp.";
+      otraB.href=waUrl("Hola, tengo una duda sobre crianza y salud infantil.");
+    }
+    var resto=cur.length-shown;
+    if(resto>0){mas.hidden=false;mas.textContent="Ver más dudas ("+resto+")";}else{mas.hidden=true;}
+  }
+  function cambiar(){q=inp.value;shown=LOTE;box.classList.toggle("tiene",q.length>0);dibujar();}
+  inp.addEventListener("input",cambiar);
+  clr.addEventListener("click",function(){inp.value="";cambiar();inp.focus();});
+  mas.addEventListener("click",function(){shown+=LOTE;dibujar();});
+  Array.prototype.forEach.call(document.querySelectorAll('.chip[data-para="'+quien+'"]'),function(c){
+    c.addEventListener("click",function(){inp.value=c.getAttribute("data-q");cambiar();});
+  });
+  dibujar();
+}
+seccion("nayara");seccion("turey");
+
+/* Enlaces generales de WhatsApp */
+Array.prototype.forEach.call(document.querySelectorAll("[data-wa]"),function(a){a.href=waUrl(a.getAttribute("data-wa"));});
+var cmp=$("compartir");
+if(cmp&&/^https?:$/.test(location.protocol)){
+  cmp.href="https://wa.me/?text="+encodeURIComponent("CIBA: información de salud infantil para las familias. "+location.origin+location.pathname);
+}
+
+/* Menú hamburguesa */
+var btn=$("menu-btn"),panel=$("menu"),fondo=$("fondo"),txt=$("menu-txt");
+function abierto(){return panel.classList.contains("open");}
+function abrir(){
+  panel.classList.add("open");fondo.classList.add("open");
+  btn.setAttribute("aria-expanded","true");txt.textContent="Cerrar";
+  document.body.classList.add("menu-abierto");
+  var a=panel.querySelector("a");if(a){a.focus();}
+}
+function cerrar(devolverFoco){
+  panel.classList.remove("open");fondo.classList.remove("open");
+  btn.setAttribute("aria-expanded","false");txt.textContent="Menú";
+  document.body.classList.remove("menu-abierto");
+  if(devolverFoco){btn.focus();}
+}
+btn.addEventListener("click",function(){if(abierto()){cerrar(true);}else{abrir();}});
+fondo.addEventListener("click",function(){cerrar(true);});
+panel.addEventListener("click",function(e){var t=e.target;while(t&&t!==panel){if(t.tagName==="A"&&t.getAttribute("href").charAt(0)==="#"){cerrar(false);return;}t=t.parentNode;}});
+document.addEventListener("keydown",function(e){
+  if(!abierto()){return;}
+  if(e.key==="Escape"){cerrar(true);return;}
+  if(e.key==="Tab"){
+    var f=panel.querySelectorAll("a,button"),p=f[0],u=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===p){e.preventDefault();u.focus();}
+    else if(!e.shiftKey&&document.activeElement===u){e.preventDefault();p.focus();}
+  }
+});
+
+/* Tamaño de letra */
+var pasos=[100,112,125];
+function tam(){var v=parseInt(document.documentElement.style.fontSize,10);return pasos.indexOf(v)>-1?v:100;}
+function poner(v){
+  document.documentElement.style.fontSize=v+"%";
+  try{localStorage.setItem("ciba-letra",String(v));}catch(e){}
+}
+$("a-mas").addEventListener("click",function(){var i=pasos.indexOf(tam());if(i<pasos.length-1){poner(pasos[i+1]);}});
+$("a-menos").addEventListener("click",function(){var i=pasos.indexOf(tam());if(i>0){poner(pasos[i-1]);}});
+
+/* Sección activa en el menú */
+var enlaces=panel.querySelectorAll('a[href^="#"]');
+function marcar(id){
+  Array.prototype.forEach.call(enlaces,function(a){
+    if(a.getAttribute("href")==="#"+id){a.setAttribute("aria-current","true");}else{a.removeAttribute("aria-current");}
+  });
+}
+if("IntersectionObserver" in window){
+  var ids=["inicio","crianza","informatica","bienestar","acompanamiento","dudas-nayara","dudas-turey","destacados","biblioteca","proyecto"];
+  var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){marcar(x.target.id);}});},{rootMargin:"-30% 0px -60% 0px"});
+  ids.forEach(function(id){var el=$(id);if(el){so.observe(el);}});
+}
+
+/* Volver arriba */
+var subir=$("f-top");
+function revisar(){subir.classList.toggle("show",(window.pageYOffset||document.documentElement.scrollTop)>700);}
+window.addEventListener("scroll",revisar,{passive:true});revisar();
+subir.addEventListener("click",function(){window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});});
+
+/* Aviso de conexión */
+var red=$("red"),tRed;
+function aviso(msg,vuelve){
+  clearTimeout(tRed);red.textContent=msg;red.className="red show"+(vuelve?" vuelve":"");
+  if(vuelve){tRed=setTimeout(function(){red.className="red";},3000);}
+}
+window.addEventListener("offline",function(){aviso("Sin conexión. Lo que ya cargó seguirá funcionando; el WhatsApp necesita Internet.",false);});
+window.addEventListener("online",function(){aviso("Conexión recuperada.",true);});
+if(navigator.onLine===false){aviso("Sin conexión. Lo que ya cargó seguirá funcionando; el WhatsApp necesita Internet.",false);}
+
+/* Aparición suave al desplazarse */
+var rv=document.querySelectorAll(".rv");
+if("IntersectionObserver" in window&&!reduce&&!lite){
+  document.documentElement.classList.add("js");
+  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add("vis");io.unobserve(x.target);}});},{threshold:.12});
+  Array.prototype.forEach.call(rv,function(el){io.observe(el);});
+}
 })();
 </script>
 </body>
